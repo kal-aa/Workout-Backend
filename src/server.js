@@ -15,6 +15,9 @@ app.use((req, res, next) => {
 });
 
 // routes
+app.get("/", (req, res) => {
+  res.status(200).json({ message: "Welcome to my workout backend" });
+});
 app.use("/api/user", userRoutes);
 app.use("/api/workouts", workoutRoutes);
 
