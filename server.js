@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
 import workoutRoutes from "./routes/workouts.js";
+import userRoutes from "./routes/user.js";
 
 const app = express();
 dotenv.config();
@@ -13,6 +14,8 @@ app.use((req, res, next) => {
   next();
 });
 
+// routes
+app.use("/api/user", userRoutes);
 app.use("/api/workouts", workoutRoutes);
 
 async function connectDBAndListen() {
