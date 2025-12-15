@@ -1,9 +1,13 @@
-import mongoose, { isValidObjectId } from "mongoose";
+import { isValidObjectId } from "mongoose";
 import Workout from "../models/workout.js";
 
 // Get all workouts
 export const getWorkouts = async (req, res) => {
-  const workouts = await Workout.find().sort({ createdAt: -1 });
+  const userId = req.user._id;
+
+  const workouts = await Workout.find({ userId }).sort({
+    createdAt: -1,
+  });
 
   res.status(200).json(workouts);
 };
@@ -38,7 +42,13 @@ export const createWorkout = async (req, res) => {
   }
 
   try {
-    const workout = await Workout.create({ title, load, reps });
+    const userId = req.user._id;
+    const workout = await Workout.create({
+      userId,
+      title,
+      load,
+      reps,
+    });
 
     res.status(200).json(workout);
   } catch (error) {
